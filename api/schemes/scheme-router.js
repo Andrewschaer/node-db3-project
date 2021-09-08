@@ -33,15 +33,6 @@ router.get('/:scheme_id/steps', checkSchemeId, (req, res, next) => {
     .catch(next)
 })
 
-/*
-  [POST] /api/schemes { "scheme_name": "Take Ovah" }
-
-  response:
-  {
-    "scheme_id": 8,
-    "scheme_name": "Take Ovah"
-  }
-*/
 router.post('/', validateScheme, (req, res, next) => {
   const scheme = req.body
 
@@ -54,22 +45,6 @@ router.post('/', validateScheme, (req, res, next) => {
 
 /*
   [POST] /api/schemes/5/steps { "instructions": "and yet more questing", "step_number": 2 }
-
-  response:
-  [
-    {
-      "step_id": 12,
-      "step_number": 1,
-      "instructions": "quest and quest some more",
-      "scheme_name": "Find the Holy Grail"
-    },
-    {
-      "step_id": 17,
-      "step_number": 2,
-      "instructions": "and yet more questing",
-      "scheme_name": "Find the Holy Grail"
-    }
-  ]
 */
 router.post('/:scheme_id/steps', checkSchemeId, validateStep, (req, res, next) => {
   const step = req.body

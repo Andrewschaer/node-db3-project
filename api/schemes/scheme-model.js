@@ -69,22 +69,39 @@ async function add(scheme) {
     scheme_name: initialResult.scheme_name
   };
   return result
-
-
-  // response:
-  // {
-  //   "scheme_id": 8,
-  //   "scheme_name": "Take Ovah"
-  // }
-  
 }
 
-function addStep(scheme_id, step) { // EXERCISE E
+async function addStep(scheme_id, step) {
+  const possibleScheme = await db('schemes').where('scheme_id', scheme_id).first();
+  if (possibleScheme === undefined) {
+    return possibleScheme
+  } else {
+    await db('steps').insert({
+      ...step, scheme_id
+    }); 
+    return findSteps(scheme_id);
+  }
+  
   /*
     1E- This function adds a step to the scheme with the given `scheme_id`
     and resolves to _all the steps_ belonging to the given `scheme_id`,
     including the newly created one.
   */
+    // response:
+    // [
+    //   {
+    //     "step_id": 12,
+    //     "step_number": 1,
+    //     "instructions": "quest and quest some more",
+    //     "scheme_name": "Find the Holy Grail"
+    //   },
+    //   {
+    //     "step_id": 17,
+    //     "step_number": 2,
+    //     "instructions": "and yet more questing",
+    //     "scheme_name": "Find the Holy Grail"
+    //   }
+    // ]
 }
 
 module.exports = {
