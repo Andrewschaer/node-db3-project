@@ -32,9 +32,10 @@ const checkSchemeId = (req, res, next) => {
 */
 const validateScheme = (req, res, next) => {
   if (
-    req.body.scheme_name === undefined ||
+    !(req.body.scheme_name) ||
     !req.body.scheme_name.trim() ||
-    typeof req.body.scheme_name !== 'string'
+    typeof req.body.scheme_name !== 'string' ||
+    !isNaN(Number(req.body.scheme_name.trim()))
   ) {
     next({ 
       message: 'invalid scheme_name',
@@ -53,6 +54,7 @@ const validateScheme = (req, res, next) => {
     "message": "invalid step"
   }
 */
+
 const validateStep = (req, res, next) => {
   if (
     req.body.instructions === undefined ||
