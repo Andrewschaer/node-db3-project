@@ -1,4 +1,3 @@
-// DO NOT CHANGE THIS FILE
 const express = require('express')
 const { checkSchemeId, validateScheme, validateStep } = require('./scheme-middleware')
 const Schemes = require('./scheme-model.js')
@@ -43,9 +42,6 @@ router.post('/', validateScheme, (req, res, next) => {
     .catch(next)
 })
 
-/*
-  [POST] /api/schemes/5/steps { "instructions": "and yet more questing", "step_number": 2 }
-*/
 router.post('/:scheme_id/steps', checkSchemeId, validateStep, (req, res, next) => {
   const step = req.body
   const { scheme_id } = req.params

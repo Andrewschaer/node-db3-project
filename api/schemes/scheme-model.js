@@ -81,27 +81,6 @@ async function addStep(scheme_id, step) {
     }); 
     return findSteps(scheme_id);
   }
-  
-  /*
-    1E- This function adds a step to the scheme with the given `scheme_id`
-    and resolves to _all the steps_ belonging to the given `scheme_id`,
-    including the newly created one.
-  */
-    // response:
-    // [
-    //   {
-    //     "step_id": 12,
-    //     "step_number": 1,
-    //     "instructions": "quest and quest some more",
-    //     "scheme_name": "Find the Holy Grail"
-    //   },
-    //   {
-    //     "step_id": 17,
-    //     "step_number": 2,
-    //     "instructions": "and yet more questing",
-    //     "scheme_name": "Find the Holy Grail"
-    //   }
-    // ]
 }
 
 module.exports = {
