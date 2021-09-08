@@ -8,14 +8,14 @@ const Schemes = require('./scheme-model');
   }
 */
 const checkSchemeId = (req, res, next) => {
-  const { id } = req.params;
-  Schemes.findById(id)
+  const { scheme_id } = req.params;
+  Schemes.findById(scheme_id)
     .then(possibleScheme => {
       if (possibleScheme) {
         req.Scheme = possibleScheme;
         next();
       } else {
-        next({ message: `scheme with scheme_id ${id} not found`, 
+        next({ message: `scheme with scheme_id ${scheme_id} not found`, 
               status: 404 });
       }
     })

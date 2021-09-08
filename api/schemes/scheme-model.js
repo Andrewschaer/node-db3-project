@@ -22,11 +22,40 @@ async function find() { // EXERCISE A
     .select('sc.scheme_id','sc.scheme_name')
     .count('st.step_id as number_of_steps')
     .groupBy('sc.scheme_id')
-    .orderBy('sc.scheme_id', 'asc')
-  return result
+    .orderBy('sc.scheme_id', 'asc');
+  return result;
 }
 
-function findById(scheme_id) { // EXERCISE B
+async function findById(scheme_id) { // EXERCISE B
+  const possibleScheme = await db('schemes').where('scheme_id', scheme_id).first();
+  if (possibleScheme === undefined) {
+    return possibleScheme
+  } else {
+    const initialArray = await db('schemes as sc')
+      .leftJoin('steps as st','sc.scheme_id','st.scheme_id')
+      .select('st.step_id','st.step_number','st.instructions','sc.scheme_name', 'sc.scheme_id')
+      .where('sc.scheme_id', scheme_id)
+      .orderBy('st.step_number', 'asc');
+     if (initialArray[0].step_number === null) {
+      const result = {
+        scheme_id: initialArray[0].scheme_id,
+        scheme_name: initialArray[0].scheme_name,
+        steps: []
+      };
+      return result;
+    } else {
+      const result = {
+        scheme_id: initialArray[0].scheme_id,
+        scheme_name: initialArray[0].scheme_name,
+        steps: initialArray.map(obj => ({
+          step_id: obj.step_id,
+          step_number: obj.step_number,
+          instructions: obj.instructions
+        }))
+      }; 
+      return result;
+    }
+  }
   /*
     1B- Study the SQL query below running it in SQLite Studio against `data/schemes.db3`:
 
